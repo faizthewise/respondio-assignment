@@ -16,6 +16,11 @@ export default {
         },
         surface: "#273240",
         body: "#CED3D9",
+        danger: {
+          high: "#2B0809",
+          DEFAULT: "#ef4444",
+          low: "#F7D4D5",
+        },
       },
     },
   },
