@@ -20,10 +20,16 @@ const nodeSelections = [
 
 const selectedNode = ref("");
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "add"]);
 
 const handleCancel = () => {
   emit("close");
+};
+
+const handleAddNode = () => {
+  console.log("handleAddNode");
+  emit("add", { title: title.value, description: description.value });
+  handleCancel();
 };
 </script>
 
@@ -43,7 +49,7 @@ const handleCancel = () => {
         <AppButton id="cancel" theme="secondary" @click="handleCancel">
           Cancel
         </AppButton>
-        <AppButton id="add">Add</AppButton>
+        <AppButton id="add" @click="handleAddNode">Add</AppButton>
       </div>
     </div>
   </AppModal>
