@@ -27,8 +27,11 @@ const handleCancel = () => {
 };
 
 const handleAddNode = () => {
-  console.log("handleAddNode");
-  emit("add", { title: title.value, description: description.value });
+  emit("add", {
+    title: title.value,
+    description: description.value,
+    type: selectedNode.value,
+  });
   handleCancel();
 };
 </script>

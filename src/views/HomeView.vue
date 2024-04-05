@@ -1,46 +1,65 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import type { Elements } from "@vue-flow/core";
-import type { Node } from "@vue-flow/core";
+import { ref } from "vue";
 import { VueFlow, useVueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
 
-import { AppButton } from "@/components/base";
+import AppButton from "@/components/base/AppButton.vue";
 import AddNodeModal from "@/components/main/AddNodeModal.vue";
+import CustomNode from "@/components/nodes/CustomNode.vue";
 
-const initialNodes = ref<Node[]>([
+import { CustomData, CustomEvents } from "@/ts/interface";
+
+const { addNodes, removeNodes } = useVueFlow();
+
+const nodes = ref<CustomNode[]>([
   {
     id: "1",
+    type: "sendMessage",
     position: { x: 50, y: 50 },
-    label: "Node 1",
-    data: {},
+    data: {
+      title: "Node 1",
+      description: "Hahahaha",
+    },
+  },
+  {
+    id: "2",
+    label: "Node 2",
+    type: "trigger",
+    data: {
+      title: "Node 2",
+      description: "Hihuhihu",
+    },
+    position: { x: 50, y: 200 },
   },
 ]);
-const { addNodes } = useVueFlow();
 
 const onAddNode = ({
   title,
   description,
+  type,
 }: {
   title: string;
   description: string;
+  type: string;
 }) => {
   const id = generateUniqueId();
   const information = {
     id: id,
     position: { x: Math.random() * 500, y: Math.random() * 500 },
-
+    type,
     data: {
-      label: title,
-      hello: description,
+      title,
+      description,
     },
   };
-  // add a single node to the graph
   addNodes(information);
 };
 
+const onRemoveNode = (id: string) => {
+  removeNodes(id);
+};
+
 function generateUniqueId(): string {
-  // Generate a unique id using a library or custom logic
   return Math.random().toString();
 }
 
@@ -66,8 +85,17 @@ const toggleAddNodeModal = () => {
         </AppButton>
       </div>
       <div class="w-full h-[1000px]">
-        <VueFlow :node="initialNodes">
+        <VueFlow :nodes="nodes">
           <Background />
+          <template #node-sendMessage="customNodeProps">
+            <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #node-trigger="customNodeProps">
+            <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #node-businessHours="customNodeProps">
+            <CustomNode v-bind="customNodeProps" />
+          </template>
         </VueFlow>
       </div>
     </div>
