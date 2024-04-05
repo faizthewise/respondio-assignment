@@ -2,7 +2,7 @@
 import { defineProps } from "vue";
 import AppSpinner from "@/components/base/AppSpinner.vue";
 
-const props = defineProps({
+defineProps({
   theme: {
     type: String,
     default: "primary",

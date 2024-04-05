@@ -2,7 +2,7 @@
 import { defineProps } from "vue";
 import { ChevronDownIcon } from "@heroicons/vue/16/solid";
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: [String, Number, Boolean],
     required: false,

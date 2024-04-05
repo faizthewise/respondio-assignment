@@ -3,6 +3,8 @@ import { defineProps, defineEmits, ref } from "vue";
 
 import { AppModal, AppInput, AppTextbox, AppSelect, AppButton } from "../base";
 
+import { NodeTypes } from "@/constants";
+
 defineProps({
   visible: {
     type: Boolean,
@@ -10,12 +12,14 @@ defineProps({
   },
 });
 
+const { sendMessage, businessHours, addComment } = NodeTypes;
+
 const title = ref("");
 const description = ref("");
 const nodeSelections = [
-  { key: "sendMessage", value: "Send Message" },
-  { key: "addComment", value: "Add Comments" },
-  { key: "businessHours", value: "businessHours" },
+  { key: sendMessage, value: "Send Message" },
+  { key: addComment, value: "Add Comments" },
+  { key: businessHours, value: "Business Hours" },
 ];
 
 const selectedNode = ref("");

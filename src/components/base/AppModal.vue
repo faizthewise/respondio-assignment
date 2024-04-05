@@ -15,12 +15,6 @@ const props = defineProps({
     default: false,
   },
 });
-
-const emit = defineEmits(["close"]);
-
-const closeModal = () => {
-  emit("close");
-};
 </script>
 
 <template>

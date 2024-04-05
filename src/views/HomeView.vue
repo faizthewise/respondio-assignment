@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { Node } from "@vue-flow/core";
 import { VueFlow, useVueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
 
 import AppButton from "@/components/base/AppButton.vue";
-import AddNodeModal from "@/components/main/AddNodeModal.vue";
-import CustomNode from "@/components/nodes/CustomNode.vue";
+import { AddNodeModal, CustomNode } from "@/components/main";
 
-import { CustomData, CustomEvents } from "@/ts/interface";
+import type { CustomData, CustomEvents } from "@/ts/interface";
+import type { CustomNodeTypes } from "@/ts/type";
+import { NodeTypes } from "@/constants";
 
 const { addNodes, removeNodes } = useVueFlow();
+
+const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
+
+type CustomNode = Node<CustomData, CustomEvents, CustomNodeTypes>;
 
 const nodes = ref<CustomNode[]>([
   {
     id: "1",
-    type: "sendMessage",
+    type: sendMessage,
     position: { x: 50, y: 50 },
     data: {
       title: "Node 1",
@@ -24,7 +30,7 @@ const nodes = ref<CustomNode[]>([
   {
     id: "2",
     label: "Node 2",
-    type: "trigger",
+    type: trigger,
     data: {
       title: "Node 2",
       description: "Hihuhihu",
@@ -94,6 +100,9 @@ const toggleAddNodeModal = () => {
             <CustomNode v-bind="customNodeProps" />
           </template>
           <template #node-businessHours="customNodeProps">
+            <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #node-addComment="customNodeProps">
             <CustomNode v-bind="customNodeProps" />
           </template>
         </VueFlow>

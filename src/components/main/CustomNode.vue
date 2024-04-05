@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { NodeProps, Position } from "@vue-flow/core";
+import type { NodeProps } from "@vue-flow/core";
 
 import {
   BoltIcon,
@@ -9,19 +9,22 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/vue/24/outline";
 
-import { CustomData, CustomEvents } from "@/ts/interface";
+import type { CustomData, CustomEvents } from "@/ts/interface";
+import { NodeTypes } from "@/constants";
 
 const props = defineProps<NodeProps<CustomData, CustomEvents>>();
 
+const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
+
 const nodeIcon = computed(() => {
   switch (props.type) {
-    case "trigger":
+    case trigger:
       return BoltIcon;
-    case "sendMessage":
+    case sendMessage:
       return ChevronDoubleRightIcon;
-    case "addComment":
+    case addComment:
       return ChatBubbleBottomCenterTextIcon;
-    case "businessHours":
+    case businessHours:
       return BuildingStorefrontIcon;
     default:
       return null;
