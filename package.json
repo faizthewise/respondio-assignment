@@ -16,6 +16,7 @@
   "dependencies": {
     "@vue-flow/core": "^1.33.5",
     "pinia": "^2.1.7",
+    "typeface-roboto": "^1.1.13",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
