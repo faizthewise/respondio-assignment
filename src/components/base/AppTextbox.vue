@@ -98,7 +98,7 @@ const emit = defineEmits(["update:modelValue"]);
   @apply border border-white py-[0.625rem] px-4 w-full rounded-full;
 }
 .inputText {
-  @apply w-full h-full outline-none text-white bg-surface;
+  @apply w-full h-full outline-none text-white bg-inherit;
 }
 .error {
   @apply flex items-center text-danger text-sm my-[0.375rem];

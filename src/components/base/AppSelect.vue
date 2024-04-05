@@ -123,7 +123,7 @@ const onChange = ($event: Event) => {
   @apply block text-white mb-[0.375rem] font-medium;
 }
 .inputSelect {
-  @apply w-full border border-white bg-surface px-4 py-3 rounded-full outline-none text-white;
+  @apply w-full border border-white bg-inherit px-4 py-3 rounded-full outline-none text-white;
 }
 .error {
   @apply flex items-center text-danger text-sm my-[0.375rem];

@@ -1,18 +1,47 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { AppButton, AppSelect, AppInput, AppTextbox } from "@/components/base";
+import { ref, onMounted } from "vue";
+import type { Elements } from "@vue-flow/core";
+import { VueFlow } from "@vue-flow/core";
 
-const selectedOption = ref("");
-const options = ["test", "test2"];
-const input = ref("");
+import { AppButton } from "@/components/base";
+import AddNodeModal from "@/components/main/AddNodeModal.vue";
+
+const elements = ref<Elements>([
+  {
+    id: "1",
+    position: { x: 50, y: 50 },
+    label: "Node 1",
+  },
+]);
+
+onMounted(() => {
+  elements.value.push({
+    id: "2",
+    label: "Node 2",
+    position: { x: 150, y: 50 },
+  });
+});
+
+const showAddNodeModal = ref(false);
+
+const toggleAddNodeModal = () => {
+  showAddNodeModal.value = !showAddNodeModal.value;
+};
 </script>
 
 <template>
-  <div class="h-full max-w-[1440px] px-60 py-40">
-    <AppButton id="create-node">Test</AppButton>
-    <AppButton id="delete-node" theme="secondary">Sign Up Demo</AppButton>
-    <AppSelect label="test" v-model="selectedOption" :options="options" />
-    <AppInput label="input" v-model="input" />
-    <AppTextbox label="comment" v-model="input" />
+  <AddNodeModal :visible="showAddNodeModal" @close="toggleAddNodeModal" />
+  <div class="h-full w-full px-28 py-16">
+    <div class="flex flex-col gap-4">
+      <h2>Easy flowchart</h2>
+      <div class="w-full flex justify-end">
+        <AppButton id="add-node" size="lg" @click="toggleAddNodeModal">
+          Add Node
+        </AppButton>
+      </div>
+      <div class="w-full h-[1000px]">
+        <VueFlow v-model="elements" />
+      </div>
+    </div>
   </div>
 </template>
