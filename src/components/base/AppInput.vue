@@ -8,7 +8,7 @@ defineProps({
   },
   label: {
     type: String,
-    required: true,
+    default: "",
   },
   placeholder: {
     type: String,
@@ -40,10 +40,7 @@ const emit = defineEmits(["update:modelValue"]);
 <template>
   <div>
     <div class="flex gap-1">
-      <label
-        :data-id="`label-${label.toLowerCase().replace(/ /g, '-')}`"
-        :class="$style.inputLabel"
-      >
+      <label :id="`${$attrs.id}-label`" :class="$style.inputLabel" v-if="label">
         {{ label }}
         <span v-if="required" data-test="label-required" class="text-danger"
           >*</span
@@ -66,8 +63,7 @@ const emit = defineEmits(["update:modelValue"]);
           disabled ? ' opacity-50 cursor-not-allowed' : null
         }`"
         :name="label"
-        :data-id="`input-${label.toLowerCase().replace(/ /g, '-')}`"
-        :id="label.toLowerCase().replace(/ /g, '_')"
+        :id="`${$attrs.id}-input`"
         :placeholder="placeholder"
         @input="
           $emit(

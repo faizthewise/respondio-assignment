@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { defineProps, computed, watch, ref } from "vue";
-import {
-  XMarkIcon,
-  EllipsisHorizontalCircleIcon,
-} from "@heroicons/vue/24/outline";
+import { computed, watch, ref } from "vue";
+import { PencilIcon, TrashIcon } from "@heroicons/vue/20/solid";
 import { useRouter, useRoute } from "vue-router";
 
+import { AppModal, AppButton, AppInput, AppTextbox } from "../base";
+import SendMessage from "@/components/drawer/SendMessage.vue";
 import { useNodeStore } from "@/stores/nodes";
 
 import type { CustomNode } from "@/ts/type";
@@ -53,35 +52,63 @@ const close = () => {
   router.push("/");
 };
 
-const displayActions = ref(false);
-const toggleDisplayAction = () => {
-  displayActions.value = !displayActions.value;
+const displayModal = ref(false);
+const toggleDisplayModal = () => {
+  displayModal.value = !displayModal.value;
+};
+
+const modifyMode = ref("");
+
+const handleModify = (modify: string) => {
+  modifyMode.value = modify;
+  toggleDisplayModal();
 };
 
 const deleteNode = () => {
-  console.log("deleteNode ", nodeDetail.value.id);
-  nodeStore.removeNode(nodeDetail.value.id as string);
-  toggleDisplayAction();
+  nodeStore.removeNode(nodeDetail.value?.id as string);
+  toggleDisplayModal();
   close();
 };
+
+const title = ref(nodeDetail.value?.data?.title || "");
+const description = ref(nodeDetail.value?.data?.description || "");
 
 const updateNode = () => {
   const updatedNode = {
     ...nodeDetail.value,
-    data: { title: "tukar", description: "tukar" },
+    data: { title: title.value, description: description.value },
   };
 
-  console.log("updatedNode ", updatedNode);
-
   nodeStore.updateNode(updatedNode as CustomNode);
-  console.log("nodes ", nodeStore.getNodeById("3"));
-
-  toggleDisplayAction();
+  toggleDisplayModal();
   close();
 };
 </script>
 
 <template>
+  <AppModal title="Remove Node" :visible="displayModal">
+    <template v-if="modifyMode === 'delete'">
+      <p>Are you sure about removing the node?</p>
+      <div class="w-full flex justify-end gap-4">
+        <AppButton id="cancel" theme="secondary" @click="toggleDisplayModal">
+          Cancel
+        </AppButton>
+        <AppButton id="remove" theme="danger" @click="deleteNode">
+          Remove
+        </AppButton>
+      </div>
+    </template>
+    <template v-else-if="modifyMode === 'update'">
+      <AppInput id="title" label="title" v-model="title" />
+      <AppTextbox id="description" label="description" v-model="description" />
+      <div class="w-full flex justify-end gap-4 mt-8">
+        <AppButton id="cancel" theme="secondary" @click="toggleDisplayModal">
+          Cancel
+        </AppButton>
+        <AppButton id="update" @click="updateNode"> Update </AppButton>
+      </div>
+    </template>
+  </AppModal>
   <div
     :class="[
       width,
@@ -92,28 +119,33 @@ const updateNode = () => {
       <div class="flex flex-col gap-3 mb-6">
         <div class="flex justify-between items-center">
           <h3>{{ nodeDetail?.data?.title }}</h3>
-          <EllipsisHorizontalCircleIcon
-            class="w-6 h-6 hover:cursor-pointer hover:text-white"
-            @click="toggleDisplayAction"
-          />
-          <div
-            v-if="displayActions"
-            class="absolute bg-gray-500 right-10 top-16 flex flex-col"
-          >
-            <buttton :class="$style.button" @click="updateNode">Edit</buttton>
-            <button :class="$style.button" @click="deleteNode">Delete</button>
+
+          <div class="flex gap-3">
+            <TrashIcon
+              class="w-5 h-5 hover:cursor-pointer text-danger"
+              @click="
+                () => {
+                  handleModify('delete');
+                }
+              "
+            />
+            <PencilIcon
+              class="w-5 h-5 hover:cursor-pointer text-primary"
+              @click="
+                () => {
+                  handleModify('update');
+                }
+              "
+            />
           </div>
         </div>
         <p class="text-sm">{{ nodeDetail?.data?.description }}</p>
       </div>
 
       <div class="h-[2px] bg-white w-full"></div>
+      <div class="mt-8">
+        <SendMessage />
+      </div>
     </div>
   </div>
 </template>
-
-<style lang="postcss" module>
-.button {
-  @apply min-w-[150px] py-2 text-center text-white hover:cursor-pointer hover:bg-blue-950;
-}
-</style>

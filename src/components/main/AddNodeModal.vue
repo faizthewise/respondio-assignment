@@ -52,8 +52,8 @@ const handleCancel = () => {
 <template>
   <AppModal title="Add Node" :visible="visible">
     <div class="flex flex-col gap-6">
-      <AppInput label="Title" v-model="title" />
-      <AppTextbox label="Description" v-model="description" />
+      <AppInput id="title" label="Title" v-model="title" />
+      <AppTextbox id="description" label="Description" v-model="description" />
       <AppSelect
         label="Type of Node"
         :options="nodeSelections"

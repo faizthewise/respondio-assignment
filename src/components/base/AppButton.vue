@@ -7,7 +7,7 @@ defineProps({
     type: String,
     default: "primary",
     validator: (value: string) =>
-      !value || ["primary", "secondary"].includes(value),
+      !value || ["primary", "secondary", "danger"].includes(value),
   },
   loading: {
     type: Boolean,
@@ -62,6 +62,9 @@ defineProps({
 }
 .secondary {
   @apply border border-white shadow-sm text-white bg-surface hover:bg-primary hover:border-primary active:bg-primary;
+}
+.danger {
+  @apply border border-transparent shadow-sm text-white bg-danger hover:bg-danger-high active:bg-danger-high;
 }
 .loader {
   @apply -ml-1 mr-3 h-5 w-5;
