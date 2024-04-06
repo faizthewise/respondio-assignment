@@ -2,8 +2,10 @@
 import { defineProps, defineEmits, ref } from "vue";
 
 import { AppModal, AppInput, AppTextbox, AppSelect, AppButton } from "../base";
+import { useNodeStore } from "@/stores/nodes";
 
 import { NodeTypes } from "@/constants";
+import type { CustomNode } from "@/ts/type";
 
 defineProps({
   visible: {
@@ -13,30 +15,37 @@ defineProps({
 });
 
 const { sendMessage, businessHours, addComment } = NodeTypes;
-
-const title = ref("");
-const description = ref("");
 const nodeSelections = [
   { key: sendMessage, value: "Send Message" },
   { key: addComment, value: "Add Comments" },
   { key: businessHours, value: "Business Hours" },
 ];
 
+const title = ref("");
+const description = ref("");
 const selectedNode = ref("");
 
-const emit = defineEmits(["close", "add"]);
+const nodeStore = useNodeStore();
+
+const handleAddNode = () => {
+  let node = {
+    id: Math.random().toString(),
+    type: selectedNode.value,
+    position: { x: Math.random() * 500, y: Math.random() * 500 },
+    data: {
+      title: title.value,
+      description: description.value,
+    },
+  };
+
+  nodeStore.addNode(node as CustomNode);
+  handleCancel();
+};
+
+const emit = defineEmits(["close"]);
 
 const handleCancel = () => {
   emit("close");
-};
-
-const handleAddNode = () => {
-  emit("add", {
-    title: title.value,
-    description: description.value,
-    type: selectedNode.value,
-  });
-  handleCancel();
 };
 </script>
 

@@ -1,87 +1,59 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { Node } from "@vue-flow/core";
-import { VueFlow, useVueFlow } from "@vue-flow/core";
+import { ref, computed, watchEffect } from "vue";
+import type { Edge } from "@vue-flow/core";
+import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
+import { useRoute } from "vue-router";
 
 import AppButton from "@/components/base/AppButton.vue";
-import { AddNodeModal, CustomNode } from "@/components/main";
+import {
+  AddNodeModal,
+  CustomNode,
+  CustomEdge,
+  Drawer,
+} from "@/components/main";
+import { useNodeStore } from "@/stores/nodes";
 
-import type { CustomData, CustomEvents } from "@/ts/interface";
-import type { CustomNodeTypes } from "@/ts/type";
-import { NodeTypes } from "@/constants";
+import type { EdgeCustomData } from "@/ts/interface";
 
-const { addNodes, removeNodes } = useVueFlow();
-
-const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
-
-type CustomNode = Node<CustomData, CustomEvents, CustomNodeTypes>;
-
-const nodes = ref<CustomNode[]>([
-  {
-    id: "1",
-    type: sendMessage,
-    position: { x: 50, y: 50 },
-    data: {
-      title: "Node 1",
-      description: "Hahahaha",
-    },
-  },
-  {
-    id: "2",
-    label: "Node 2",
-    type: trigger,
-    data: {
-      title: "Node 2",
-      description: "Hihuhihu",
-    },
-    position: { x: 50, y: 200 },
-  },
-]);
-
-const onAddNode = ({
-  title,
-  description,
-  type,
-}: {
-  title: string;
-  description: string;
-  type: string;
-}) => {
-  const id = generateUniqueId();
-  const information = {
-    id: id,
-    position: { x: Math.random() * 500, y: Math.random() * 500 },
-    type,
-    data: {
-      title,
-      description,
-    },
-  };
-  addNodes(information);
-};
-
-const onRemoveNode = (id: string) => {
-  removeNodes(id);
-};
-
-function generateUniqueId(): string {
-  return Math.random().toString();
-}
+const nodeStore = useNodeStore();
+const nodes = ref(nodeStore.getNodes);
 
 const showAddNodeModal = ref(false);
 
 const toggleAddNodeModal = () => {
   showAddNodeModal.value = !showAddNodeModal.value;
 };
+
+type CustomEdgeTypes = "custom" | "special";
+
+type CustomEdge = Edge<EdgeCustomData, any, CustomEdgeTypes>;
+
+const edges = ref<CustomEdge[]>([
+  {
+    id: "el1-2",
+    source: "1",
+    target: "2",
+    type: "custom",
+  },
+]);
+
+const route = useRoute();
+const showDrawer = ref(false);
+
+const selectedNodeId = computed(() => {
+  return route.params?.node_id?.toString();
+});
+
+watchEffect(() => {
+  const hasNodeId = !!route.params.node_id; // Check if node_id exists
+  showDrawer.value = hasNodeId; // Set showDrawer based on node_id existence
+});
 </script>
 
 <template>
-  <AddNodeModal
-    :visible="showAddNodeModal"
-    @close="toggleAddNodeModal"
-    @add="onAddNode"
-  />
+  <AddNodeModal :visible="showAddNodeModal" @close="toggleAddNodeModal" />
+  <Drawer :visible="showDrawer" />
   <div class="h-full w-full px-28 py-16">
     <div class="flex flex-col gap-4">
       <h2>Easy flowchart</h2>
@@ -91,7 +63,7 @@ const toggleAddNodeModal = () => {
         </AppButton>
       </div>
       <div class="w-full h-[1000px]">
-        <VueFlow :nodes="nodes">
+        <VueFlow :nodes="nodes" :edges="edges">
           <Background />
           <template #node-sendMessage="customNodeProps">
             <CustomNode v-bind="customNodeProps" />
@@ -104,6 +76,9 @@ const toggleAddNodeModal = () => {
           </template>
           <template #node-addComment="customNodeProps">
             <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #edge-custom="customEdgeProps">
+            <CustomEdge v-bind="customEdgeProps" />
           </template>
         </VueFlow>
       </div>

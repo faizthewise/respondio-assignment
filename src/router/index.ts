@@ -9,6 +9,11 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
+    {
+      path: "/:node_id",
+      name: "node-details",
+      component: HomeView,
+    },
   ],
 });
 

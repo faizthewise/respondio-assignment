@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { NodeProps } from "@vue-flow/core";
+import { useRouter } from "vue-router";
 
 import {
   BoltIcon,
@@ -9,10 +10,10 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/vue/24/outline";
 
-import type { CustomData, CustomEvents } from "@/ts/interface";
+import type { NodeCustomData, CustomEvents } from "@/ts/interface";
 import { NodeTypes } from "@/constants";
 
-const props = defineProps<NodeProps<CustomData, CustomEvents>>();
+const props = defineProps<NodeProps<NodeCustomData>>();
 
 const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
 
@@ -30,10 +31,19 @@ const nodeIcon = computed(() => {
       return null;
   }
 });
+
+const router = useRouter();
+
+const openDrawer = (id: string) => {
+  router.push(id);
+};
 </script>
 
 <template>
-  <div class="border border-gray-300 rounded-lg bg-surface-low">
+  <div
+    class="border border-gray-300 rounded-lg bg-surface-low"
+    @click="openDrawer(props.id)"
+  >
     <div class="flex gap-2 px-8 py-2">
       <component :is="nodeIcon" class="w-5 h-5" />
       <p class="font-medium">{{ data.title }}</p>
