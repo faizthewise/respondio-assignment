@@ -1,9 +1,12 @@
 import { defineStore } from "pinia";
+// import { useVueFlow } from "@vue-flow/core";
 
 import type { CustomNode } from "@/ts/type";
 import { NodeTypes } from "@/constants";
 
 const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
+
+// const { addNodes, removeNodes } = useVueFlow();
 
 export const useNodeStore = defineStore("node", {
   state: () => ({
@@ -52,21 +55,34 @@ export const useNodeStore = defineStore("node", {
     getNodes(): CustomNode[] {
       return this.nodes;
     },
+    getNodeById:
+      (state) =>
+      (id: string): CustomNode | undefined => {
+        return state.nodes.find((node) => node.id === id);
+      },
   },
 
   actions: {
     addNode(node: CustomNode): void {
+      console.log("add");
       this.nodes.push(node);
     },
 
     removeNode(nodeId: string): void {
-      this.nodes = this.nodes.filter((node) => node.id !== nodeId);
+      const index = this.nodes.findIndex((node) => node.id === nodeId);
+      if (index !== -1) {
+        this.nodes.splice(index, 1);
+      }
     },
 
     updateNode(updatedNode: CustomNode): void {
       const index = this.nodes.findIndex((node) => node.id === updatedNode.id);
+
       if (index !== -1) {
-        this.nodes[index] = updatedNode;
+        this.nodes.splice(index, 1);
+        setTimeout(() => {
+          this.nodes.push(updatedNode);
+        }, 100);
       }
     },
   },

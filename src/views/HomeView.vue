@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from "vue";
+import { ref } from "vue";
 import type { Edge } from "@vue-flow/core";
 import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
-import { useRoute } from "vue-router";
 
 import AppButton from "@/components/base/AppButton.vue";
 import {
@@ -37,23 +36,11 @@ const edges = ref<CustomEdge[]>([
     type: "custom",
   },
 ]);
-
-const route = useRoute();
-const showDrawer = ref(false);
-
-const selectedNodeId = computed(() => {
-  return route.params?.node_id?.toString();
-});
-
-watchEffect(() => {
-  const hasNodeId = !!route.params.node_id; // Check if node_id exists
-  showDrawer.value = hasNodeId; // Set showDrawer based on node_id existence
-});
 </script>
 
 <template>
   <AddNodeModal :visible="showAddNodeModal" @close="toggleAddNodeModal" />
-  <Drawer :visible="showDrawer" />
+  <Drawer />
   <div class="h-full w-full px-28 py-16">
     <div class="flex flex-col gap-4">
       <h2>Easy flowchart</h2>
