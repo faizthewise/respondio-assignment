@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 // import { useVueFlow } from "@vue-flow/core";
 
 import type { CustomNode } from "@/ts/type";
+import type { SendMessagePayload } from "@/ts/interface";
 import { NodeTypes } from "@/constants";
 
 const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
@@ -116,6 +117,20 @@ export const useNodeStore = defineStore("node", {
         setTimeout(() => {
           this.nodes.push(updatedNode);
         }, 100);
+      }
+    },
+
+    updatePayloadItem(
+      nodeId: string,
+      payloadIndex: number,
+      updatedItem: SendMessagePayload
+    ): void {
+      const node = this.nodes.find((node) => node.id === nodeId);
+      if (node) {
+        const payload = node?.data?.payload;
+        if (payload && payloadIndex >= 0 && payloadIndex < payload.length) {
+          payload[payloadIndex] = updatedItem;
+        }
       }
     },
   },

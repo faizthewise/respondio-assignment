@@ -17,11 +17,12 @@ const props = defineProps({
   },
   payload: {
     type: Array as PropType<SendMessagePayload[]>,
+    default: [],
   },
 });
 
-const displayActions = ref<string[]>([]);
-const toggleDisplayAction = (index: string) => {
+const displayActions = ref<number[]>([]);
+const toggleDisplayAction = (index: number) => {
   if (displayActions.value.includes(index)) {
     const i = displayActions.value.indexOf(index);
     displayActions.value.splice(i, 1);
@@ -44,7 +45,23 @@ const addNewMessage = () => {
 
 const handleDelete = (index: number) => {
   nodeStore.deletePayloadFromNode(index, props.nodeId);
-  toggleDisplayAction(index.toString());
+  toggleDisplayAction(index);
+};
+
+const enabledFields = ref<number[]>([]);
+const toggleEnableField = (index: number) => {
+  if (enabledFields.value.includes(index)) {
+    const i = enabledFields.value.indexOf(index);
+    enabledFields.value.splice(i, 1);
+  } else {
+    enabledFields.value.push(index);
+    toggleDisplayAction(index);
+  }
+};
+
+const handleUpdate = (index: number) => {
+  nodeStore.updatePayloadItem(props.nodeId, index, props.payload[index]);
+  toggleEnableField(index);
 };
 </script>
 
@@ -60,27 +77,34 @@ const handleDelete = (index: number) => {
           class="flex gap-2 items-center relative"
           :key="index"
         >
-          <AppInput
-            :id="`message-${index}`"
-            disabled
-            :displayLabel="false"
-            v-model="data.text"
-            class="w-full"
-          />
+          <form @submit.prevent="handleUpdate(index)" class="w-full">
+            <AppInput
+              :id="`message-${index}`"
+              :disabled="!enabledFields.includes(index)"
+              :displayLabel="false"
+              v-model="data.text"
+              class="w-full"
+            />
+          </form>
 
           <EllipsisVerticalIcon
             class="w-4 h-4 hover:cursor-pointer hover:text-white"
             @click="
               () => {
-                toggleDisplayAction(index.toString());
+                toggleDisplayAction(index);
               }
             "
           />
           <div
-            v-if="displayActions.includes(index.toString())"
+            v-if="displayActions.includes(index)"
             class="absolute bg-gray-500 right-4 top-4 flex flex-col rounded-lg overflow-hidden transition-all duration-200 ease-in z-10"
           >
-            <buttton :class="$style.button">Edit</buttton>
+            <buttton
+              :class="$style.button"
+              @click="() => toggleEnableField(index)"
+            >
+              Edit
+            </buttton>
             <button :class="$style.button" @click="() => handleDelete(index)">
               Delete
             </button>
@@ -93,12 +117,15 @@ const handleDelete = (index: number) => {
     </div>
 
     <div class="w-full flex gap-2 items-center">
-      <AppInput
-        id="new-message"
-        v-model="newMessage"
-        placeholder="Enter message..."
-        class="w-full"
-      />
+      <form @submit.prevent="addNewMessage" class="w-full">
+        <AppInput
+          id="new-message"
+          v-model="newMessage"
+          placeholder="Enter message..."
+          class="w-full"
+        />
+      </form>
+
       <PaperAirplaneIcon
         class="w-6 h-6 text-primary hover:cursor-pointer"
         @click="addNewMessage"
