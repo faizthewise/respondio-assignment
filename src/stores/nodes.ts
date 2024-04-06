@@ -1,14 +1,11 @@
 import { defineStore } from "pinia";
-// import { useVueFlow } from "@vue-flow/core";
 
 import type { CustomNode } from "@/ts/type";
 import type { SendMessagePayload } from "@/ts/interface";
 import { NodeTypes } from "@/constants";
 
 const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
-
-// const { addNodes, removeNodes } = useVueFlow();
-
+//@ts-ignore
 export const useNodeStore = defineStore("node", {
   state: () => ({
     nodes: [

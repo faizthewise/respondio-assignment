@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { defineProps } from "vue";
 import { ChevronDownIcon } from "@heroicons/vue/16/solid";
 
 defineProps({

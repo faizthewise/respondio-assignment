@@ -90,9 +90,9 @@ const updateImage = (base64Data: string) => {
 <template>
   <div
     id="send-message-container"
-    class="h-full flex flex-col w-full justify-between pb-8"
+    class="h-full flex flex-col w-full justify-between relative"
   >
-    <div class="max-h-4/5 flex flex-col gap-4">
+    <div class="max-h-[90%] flex flex-col gap-4 overflow-scroll">
       <template v-for="(data, index) in payload" :key="index">
         <div
           v-if="data.type === 'text'"
@@ -138,7 +138,9 @@ const updateImage = (base64Data: string) => {
       </template>
     </div>
 
-    <div class="w-full flex gap-2 items-center">
+    <div
+      class="w-full flex gap-2 items-center h-max absolute bottom-6 right-0 bg-surface-low py-1"
+    >
       <label>
         <PlusIcon class="w-6 h-6 text-primary hover:cursor-pointer" />
         <input type="file" class="hidden" @change="handleFileChange" />

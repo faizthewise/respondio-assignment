@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from "vue";
+import { ref } from "vue";
 
 import { AppModal, AppInput, AppTextbox, AppSelect, AppButton } from "../base";
 import { useNodeStore } from "@/stores/nodes";

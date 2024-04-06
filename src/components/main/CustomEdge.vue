@@ -4,8 +4,7 @@ import { BezierEdge } from "@vue-flow/core";
 
 import type { EdgeCustomData } from "@/ts/interface";
 
-// props were passed from the slot using `v-bind="customEdgeProps"`
-const props = defineProps<EdgeProps<EdgeCustomData>>();
+defineProps<EdgeProps<EdgeCustomData>>();
 </script>
 
 <script lang="ts">

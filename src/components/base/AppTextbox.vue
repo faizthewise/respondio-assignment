@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { defineProps } from "vue";
-import { InformationCircleIcon } from "@heroicons/vue/24/outline";
-
 defineProps({
   modelValue: {
     type: [String, Number],
