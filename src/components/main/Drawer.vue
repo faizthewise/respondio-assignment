@@ -112,11 +112,11 @@ const updateNode = () => {
   <div
     :class="[
       width,
-      'h-screen bg-surface-low z-10 absolute right-0 transition-all duration-200 ease-in',
+      'h-screen bg-surface-low z-10 fixed right-0 transition-all duration-200 ease-in ',
     ]"
   >
     <div class="w-full h-full relative overflow-hidden flex flex-col pt-8 px-6">
-      <div class="flex flex-col gap-3 mb-6">
+      <div class="flex flex-col gap-3 mb-6 h-max">
         <div class="flex justify-between items-center">
           <h3>{{ nodeDetail?.data?.title }}</h3>
 
@@ -143,8 +143,8 @@ const updateNode = () => {
       </div>
 
       <div class="h-[2px] bg-white w-full"></div>
-      <div class="mt-8">
-        <SendMessage />
+      <div class="mt-8 h-full">
+        <SendMessage :payload="nodeDetail?.data?.payload" />
       </div>
     </div>
   </div>

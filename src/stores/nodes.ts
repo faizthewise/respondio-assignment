@@ -27,6 +27,17 @@ export const useNodeStore = defineStore("node", {
         data: {
           title: "Send Message",
           description: "Hehehe",
+          payload: [
+            {
+              type: "text",
+              text: "Hello there welcome to the chat!",
+            },
+            {
+              type: "attachment",
+              attachment:
+                "https://fastly.picsum.photos/id/396/536/354.jpg?hmac=GmUosOuXb6nGkFhmTE-83i0ciQcaleMyvIyqzeFbW58",
+            },
+          ],
         },
       },
       {

@@ -1,6 +1,13 @@
 export interface NodeCustomData {
   description: string;
   title: string;
+  payload?: SendMessagePayload[];
+}
+
+export interface SendMessagePayload {
+  type: string;
+  attachment: string;
+  text: string;
 }
 
 export interface EdgeCustomData {

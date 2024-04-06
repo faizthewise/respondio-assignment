@@ -82,7 +82,7 @@
   {
     "name": "Failure",
     "id": "28c4b9",
-    "type": "dateTimeConnectore",
+    "type": "dateTimeConnector",
     "data": {
       "connectorType": "failure"
     },
