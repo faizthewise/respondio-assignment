@@ -3,6 +3,7 @@ import { ref } from "vue";
 import type { Edge } from "@vue-flow/core";
 import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
+import { RectangleGroupIcon } from "@heroicons/vue/24/outline";
 
 import AppButton from "@/components/base/AppButton.vue";
 import {
@@ -43,7 +44,11 @@ const edges = ref<CustomEdge[]>([
   <Drawer />
   <div class="h-full w-full px-28 py-16">
     <div class="flex flex-col gap-4">
-      <h2>Easy flowchart</h2>
+      <div class="flex gap-2 items-center">
+        <RectangleGroupIcon class="w-10 h-10 text-primary" />
+        <h2>respond.flow</h2>
+      </div>
+
       <div class="w-full flex justify-end">
         <AppButton id="add-node" size="lg" @click="toggleAddNodeModal">
           Add Node

@@ -59,6 +59,11 @@ const toggleDisplayModal = () => {
 
 const modifyMode = ref("");
 
+const modalTitle = computed(() => {
+  if (modifyMode.value === "delete") return "Remove Node";
+  else return "Update Node";
+});
+
 const handleModify = (modify: string) => {
   modifyMode.value = modify;
   toggleDisplayModal();
@@ -86,7 +91,7 @@ const updateNode = () => {
 </script>
 
 <template>
-  <AppModal title="Remove Node" :visible="displayModal">
+  <AppModal :title="modalTitle" :visible="displayModal">
     <template v-if="modifyMode === 'delete'">
       <p>Are you sure about removing the node?</p>
       <div class="w-full flex justify-end gap-4">

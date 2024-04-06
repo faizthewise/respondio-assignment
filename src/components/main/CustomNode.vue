@@ -7,10 +7,10 @@ import {
   BoltIcon,
   ChatBubbleBottomCenterTextIcon,
   BuildingStorefrontIcon,
-  ChevronDoubleRightIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/vue/24/outline";
 
-import type { NodeCustomData, CustomEvents } from "@/ts/interface";
+import type { NodeCustomData } from "@/ts/interface";
 import { NodeTypes } from "@/constants";
 
 const props = defineProps<NodeProps<NodeCustomData>>();
@@ -22,13 +22,28 @@ const nodeIcon = computed(() => {
     case trigger:
       return BoltIcon;
     case sendMessage:
-      return ChevronDoubleRightIcon;
+      return PaperAirplaneIcon;
     case addComment:
       return ChatBubbleBottomCenterTextIcon;
     case businessHours:
       return BuildingStorefrontIcon;
     default:
       return null;
+  }
+});
+
+const iconColor = computed(() => {
+  switch (props.type) {
+    case trigger:
+      return "text-purple";
+    case sendMessage:
+      return "text-success";
+    case addComment:
+      return "text-primary";
+    case businessHours:
+      return "text-danger";
+    default:
+      return "";
   }
 });
 
@@ -44,8 +59,8 @@ const openDrawer = (id: string) => {
     class="border border-gray-300 rounded-lg bg-surface-low"
     @click="openDrawer(props.id)"
   >
-    <div class="flex gap-2 px-8 py-2">
-      <component :is="nodeIcon" class="w-5 h-5" />
+    <div class="flex items-center gap-2 px-8 py-2">
+      <component :is="nodeIcon" :class="[iconColor, 'w-5 h-5']" />
       <p class="font-medium">{{ data.title }}</p>
     </div>
     <div class="h-[2px] w-full bg-gray-300"></div>
