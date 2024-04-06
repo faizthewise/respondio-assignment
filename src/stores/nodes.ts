@@ -78,11 +78,33 @@ export const useNodeStore = defineStore("node", {
       console.log("add");
       this.nodes.push(node);
     },
+    addPayloadToNode(
+      payloadItem: { type: string; text?: string; attachment?: string },
+      nodeId: string
+    ): void {
+      const node = this.getNodeById(nodeId);
+      if (node) {
+        // Modify the payload array by adding the new payloadItem
+        node.data?.payload?.push(payloadItem);
+        // Update the node in the store
+        this.updateNode(node);
+      }
+    },
 
     removeNode(nodeId: string): void {
       const index = this.nodes.findIndex((node) => node.id === nodeId);
       if (index !== -1) {
         this.nodes.splice(index, 1);
+      }
+    },
+
+    deletePayloadFromNode(payloadIndex: number, nodeId: string): void {
+      const node = this.getNodeById(nodeId);
+      if (node?.data?.payload && node.data.payload.length > payloadIndex) {
+        // Modify the payload array by removing the payload at the specified index
+        node?.data?.payload?.splice(payloadIndex, 1);
+        // Update the node in the store
+        this.updateNode(node);
       }
     },
 

@@ -6,8 +6,8 @@ export interface NodeCustomData {
 
 export interface SendMessagePayload {
   type: string;
-  attachment: string;
-  text: string;
+  attachment?: string;
+  text?: string;
 }
 
 export interface EdgeCustomData {

@@ -149,7 +149,10 @@ const updateNode = () => {
 
       <div class="h-[2px] bg-white w-full"></div>
       <div class="mt-8 h-full">
-        <SendMessage :payload="nodeDetail?.data?.payload" />
+        <SendMessage
+          :payload="nodeDetail?.data?.payload"
+          :node-id="selectedNodeId"
+        />
       </div>
     </div>
   </div>
