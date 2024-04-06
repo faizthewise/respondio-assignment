@@ -76,7 +76,6 @@ export const useNodeStore = defineStore("node", {
 
   actions: {
     addNode(node: CustomNode): void {
-      console.log("add");
       this.nodes.push(node);
     },
     addPayloadToNode(
@@ -85,9 +84,7 @@ export const useNodeStore = defineStore("node", {
     ): void {
       const node = this.getNodeById(nodeId);
       if (node) {
-        // Modify the payload array by adding the new payloadItem
         node.data?.payload?.push(payloadItem);
-        // Update the node in the store
         this.updateNode(node);
       }
     },

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 import { EllipsisVerticalIcon } from "@heroicons/vue/16/solid";
-import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
+import { PaperAirplaneIcon, PlusIcon } from "@heroicons/vue/24/solid";
 
 import { AppInput, AppImagePreview } from "@/components/base";
 import { useNodeStore } from "@/stores/nodes";
@@ -63,6 +63,28 @@ const handleUpdate = (index: number) => {
   nodeStore.updatePayloadItem(props.nodeId, index, props.payload[index]);
   toggleEnableField(index);
 };
+
+const handleFileChange = (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64Data = reader.result as string;
+
+      updateImage(base64Data);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const updateImage = (base64Data: string) => {
+  const message = {
+    type: "attachment",
+    attachment: base64Data,
+  };
+
+  nodeStore.addPayloadToNode(message, props.nodeId);
+};
 </script>
 
 <template>
@@ -117,6 +139,10 @@ const handleUpdate = (index: number) => {
     </div>
 
     <div class="w-full flex gap-2 items-center">
+      <label>
+        <PlusIcon class="w-6 h-6 text-primary hover:cursor-pointer" />
+        <input type="file" class="hidden" @change="handleFileChange" />
+      </label>
       <form @submit.prevent="addNewMessage" class="w-full">
         <AppInput
           id="new-message"
