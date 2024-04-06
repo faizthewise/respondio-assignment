@@ -4,5 +4,14 @@ import AppSelect from "./AppSelect.vue";
 import AppInput from "./AppInput.vue";
 import AppTextbox from "./AppTextbox.vue";
 import AppModal from "./AppModal.vue";
+import AppImagePreview from "./AppImagePreview.vue";
 
-export { AppButton, AppSpinner, AppSelect, AppInput, AppTextbox, AppModal };
+export {
+  AppButton,
+  AppSpinner,
+  AppSelect,
+  AppInput,
+  AppTextbox,
+  AppModal,
+  AppImagePreview,
+};

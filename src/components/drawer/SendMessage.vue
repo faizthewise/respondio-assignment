@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { EllipsisVerticalIcon } from "@heroicons/vue/16/solid";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 
-import { AppInput } from "@/components/base";
+import { AppInput, AppImagePreview } from "@/components/base";
 import { useNodeStore } from "@/stores/nodes";
 
 import type { PropType } from "vue";
@@ -85,6 +85,9 @@ const handleDelete = (index: number) => {
               Delete
             </button>
           </div>
+        </div>
+        <div v-else>
+          <AppImagePreview :src="data.attachment" alt="preview-img" />
         </div>
       </template>
     </div>
