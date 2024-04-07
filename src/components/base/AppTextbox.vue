@@ -49,7 +49,7 @@ const emit = defineEmits(["update:modelValue"]);
     <div
       class="flex gap-1 items-center"
       :class="`${$style.inputContainer} ${error ? $style.inputError : null} ${
-        disabled ? ' opacity-50 cursor-not-allowed' : null
+        disabled ? $style.disabled : ''
       }`"
     >
       <slot name="left"></slot>
@@ -57,8 +57,8 @@ const emit = defineEmits(["update:modelValue"]);
       <textarea
         v-bind="$attrs"
         class="h-full w-full"
-        :class="`${$style.inputText} ${error ? $style.inputError : null} ${
-          disabled ? ' opacity-50 cursor-not-allowed' : null
+        :class="`${$style.inputText} ${error ? $style.inputError : ''} ${
+          disabled ? $style.disabled : ''
         }`"
         :name="label"
         :id="`${$attrs.id}-input`"
@@ -98,5 +98,8 @@ const emit = defineEmits(["update:modelValue"]);
 }
 .inputError {
   @apply border-danger bg-danger-low text-danger-high;
+}
+.disabled {
+  @apply bg-white text-surface;
 }
 </style>

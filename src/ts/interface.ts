@@ -2,6 +2,7 @@ export interface NodeCustomData {
   description: string;
   title: string;
   payload?: SendMessagePayload[];
+  comment?: string;
 }
 
 export interface SendMessagePayload {

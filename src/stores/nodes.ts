@@ -45,6 +45,7 @@ export const useNodeStore = defineStore("node", {
         data: {
           title: "Add comment",
           description: "Hehehe",
+          comment: "User message during off hours",
         },
       },
       {
@@ -125,6 +126,21 @@ export const useNodeStore = defineStore("node", {
         if (payload && payloadIndex >= 0 && payloadIndex < payload.length) {
           payload[payloadIndex] = updatedItem;
         }
+      }
+    },
+    updateComment(nodeId: string, newComment: string): void {
+      const node = this.nodes.find((node) => node.id === nodeId);
+      if (node?.data) {
+        node.data.comment = newComment;
+      }
+    },
+    deleteComment(nodeId: string): void {
+      const node = this.nodes.find((node) => node.id === nodeId);
+      console.log("deleteComment", node);
+      if (node && node.data) {
+        console.log("deleteComment if");
+        // Delete the comment field of the data object
+        delete node.data.comment;
       }
     },
   },

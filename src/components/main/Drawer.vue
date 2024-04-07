@@ -4,10 +4,11 @@ import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/20/solid";
 import { useRouter, useRoute } from "vue-router";
 
 import { AppModal, AppButton, AppInput, AppTextbox } from "../base";
-import SendMessage from "@/components/drawer/SendMessage.vue";
+import { SendMessage, AddComment } from "@/components/drawer";
 import { useNodeStore } from "@/stores/nodes";
 
 import type { CustomNode } from "@/ts/type";
+import { NodeTypes } from "@/constants";
 
 const route = useRoute();
 const showDrawer = ref(false);
@@ -88,6 +89,8 @@ const updateNode = () => {
   toggleDisplayModal();
   close();
 };
+
+const { sendMessage, addComment } = NodeTypes;
 </script>
 
 <template>
@@ -156,8 +159,15 @@ const updateNode = () => {
       <div class="h-[2px] bg-white w-full"></div>
       <div v-if="showDrawer" class="mt-8 h-full">
         <SendMessage
+          v-if="nodeDetail?.type === sendMessage"
           :payload="nodeDetail?.data?.payload"
           :node-id="selectedNodeId"
+          :type="nodeDetail?.type"
+        />
+        <AddComment
+          v-if="nodeDetail?.type === addComment"
+          :node-id="selectedNodeId"
+          :comment="nodeDetail?.data?.comment"
         />
       </div>
     </div>

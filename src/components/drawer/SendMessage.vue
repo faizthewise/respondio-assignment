@@ -132,7 +132,7 @@ const updateImage = (base64Data: string) => {
             </button>
           </div>
         </div>
-        <div v-else>
+        <div v-else-if="data.type === 'attachment'">
           <AppImagePreview :src="data.attachment" alt="preview-img" />
         </div>
       </template>
