@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import type { Edge } from "@vue-flow/core";
+import { ref } from "vue";
 import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
 import { RectangleGroupIcon } from "@heroicons/vue/24/outline";
@@ -17,31 +16,17 @@ import {
 import { useNodeStore } from "@/stores/nodes";
 import { useEdgeStore } from "@/stores/edges";
 
-import type { EdgeCustomData } from "@/ts/interface";
-
 const nodeStore = useNodeStore();
 const nodes = ref(nodeStore.getNodes);
 
 const edgeStore = useEdgeStore();
 const edges = ref(edgeStore.getEdges);
 
-onMounted(() => {
-  nodeStore.initNodes();
-  nodes.value = nodeStore.getNodes;
-
-  edgeStore.initEdges();
-  edges.value = edgeStore.getEdges;
-});
-
 const showAddNodeModal = ref(false);
 
 const toggleAddNodeModal = () => {
   showAddNodeModal.value = !showAddNodeModal.value;
 };
-
-type CustomEdgeTypes = "custom" | "special";
-
-type CustomEdge = Edge<EdgeCustomData, any, CustomEdgeTypes>;
 </script>
 
 <template>

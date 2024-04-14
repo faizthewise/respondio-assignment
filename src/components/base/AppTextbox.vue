@@ -47,7 +47,7 @@ const emit = defineEmits(["update:modelValue"]);
     </div>
 
     <div
-      class="flex gap-1 items-center"
+      class="flex gap-1 items-center min-h-[100px]"
       :class="`${$style.inputContainer} ${error ? $style.inputError : null} ${
         disabled ? $style.disabled : ''
       }`"

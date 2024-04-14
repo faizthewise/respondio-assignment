@@ -8,20 +8,20 @@ defineProps({
     type: Boolean,
     default: false,
   },
-  closeButton: {
-    type: Boolean,
-    default: false,
-  },
 });
 </script>
 
 <template>
-  <div v-show="visible" :class="$style.modal__overlay">
+  <div
+    v-show="visible"
+    :class="$style.modal__overlay"
+    data-test="modal-container"
+  >
     <div :class="$style.modal">
       <div class="flex flex-col gap-3">
         <slot name="header"></slot>
         <div class="flex flex-col gap-3 items-start self-stretch">
-          <h3>{{ title }}</h3>
+          <h3 data-test="title">{{ title }}</h3>
         </div>
         <slot></slot>
       </div>

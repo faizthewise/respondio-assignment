@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
 import { RouterView } from "vue-router";
+
+import { useNodeStore } from "@/stores/nodes";
+import { useEdgeStore } from "@/stores/edges";
+
+const nodeStore = useNodeStore();
+const edgeStore = useEdgeStore();
+
+onMounted(() => {
+  nodeStore.initNodes();
+  edgeStore.initEdges();
+});
 </script>
 
 <template>
