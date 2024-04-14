@@ -1,6 +1,16 @@
 import type { CustomNode, CustomEdge } from "@/ts/type";
+import type { NodeCustomData } from "@/ts/interface";
 
-export const addPositionParam = (nodes: CustomNode[]): CustomNode[] => {
+interface NodeWithoutPosition {
+  id: string;
+  parentNode: string | null;
+  position?: { x: number; y: number };
+  data: NodeCustomData;
+}
+
+export const addPositionParam = (
+  nodes: NodeWithoutPosition[]
+): CustomNode[] => {
   const positions: { [key: string]: number } = {};
   const defaultPosition = { x: 500, y: 0 };
   const defaultIncrement = { x: 0, y: 150 };
@@ -32,10 +42,10 @@ export const addPositionParam = (nodes: CustomNode[]): CustomNode[] => {
     }
   }
 
-  return nodes;
+  return nodes as CustomNode[];
 };
 
-export const addEdges = (nodes: CustomNode[]): CustomEdge[] => {
+export const addEdges = (nodes: NodeWithoutPosition[]): CustomEdge[] => {
   const edges: CustomEdge[] = [];
 
   // Iterate through each node
