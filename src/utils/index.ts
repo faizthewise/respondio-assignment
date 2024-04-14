@@ -3,7 +3,7 @@ import type { CustomNode, CustomEdge } from "@/ts/type";
 export const addPositionParam = (nodes: CustomNode[]): CustomNode[] => {
   const positions: { [key: string]: number } = {};
   const defaultPosition = { x: 500, y: 0 };
-  const defaultIncrement = { x: 0, y: 120 };
+  const defaultIncrement = { x: 0, y: 150 };
   const increment = 350; // Increment for the x position
 
   for (const node of nodes) {
@@ -51,6 +51,7 @@ export const addEdges = (nodes: CustomNode[]): CustomEdge[] => {
           id: `${node.id}-${parentNode.id}`,
           source: parentNode.id,
           target: node.id,
+          type: "smoothstep",
         });
       }
     }

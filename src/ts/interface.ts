@@ -3,6 +3,9 @@ export interface NodeCustomData {
   title: string;
   payload?: SendMessagePayload[];
   comment?: string;
+  type?: string;
+  timezone?: string;
+  action?: string;
 }
 
 export interface SendMessagePayload {
