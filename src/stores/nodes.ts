@@ -1,64 +1,14 @@
 import { defineStore } from "pinia";
 
+import { addPositionParam } from "@/utils";
+import nodesData from "@/data/nodes.json";
+
 import type { CustomNode } from "@/ts/type";
 import type { SendMessagePayload } from "@/ts/interface";
-import { NodeTypes } from "@/constants";
 
-const { sendMessage, businessHours, addComment, trigger } = NodeTypes;
-//@ts-ignore
 export const useNodeStore = defineStore("node", {
   state: () => ({
-    nodes: [
-      {
-        id: "1",
-        type: trigger,
-        position: { x: 50, y: 50 },
-        data: {
-          title: "Trigger",
-          description: "Hehehe",
-        },
-      },
-      {
-        id: "2",
-        type: sendMessage,
-        position: { x: 50, y: 150 },
-        data: {
-          title: "Send Message",
-          description: "Hehehe",
-          payload: [
-            {
-              type: "text",
-              text: "Hello there welcome to the chat!",
-            },
-            {
-              type: "attachment",
-              attachment:
-                "https://fastly.picsum.photos/id/396/536/354.jpg?hmac=GmUosOuXb6nGkFhmTE-83i0ciQcaleMyvIyqzeFbW58",
-            },
-          ],
-        },
-      },
-      {
-        id: "3",
-        type: addComment,
-        position: { x: 50, y: 250 },
-        data: {
-          title: "Add comment",
-          description: "Hehehe",
-          comment: "User message during off hours",
-        },
-      },
-      {
-        id: "4",
-        type: businessHours,
-        position: { x: 50, y: 350 },
-        data: {
-          title: "Business Hours",
-          description: "Hehehe",
-        },
-        parentNode: "-1",
-      },
-    ] as CustomNode[],
+    nodes: [] as CustomNode[],
   }),
 
   getters: {
@@ -73,6 +23,9 @@ export const useNodeStore = defineStore("node", {
   },
 
   actions: {
+    initNodes(): void {
+      this.nodes = addPositionParam(nodesData);
+    },
     addNode(node: CustomNode): void {
       this.nodes.push(node);
     },
@@ -136,10 +89,8 @@ export const useNodeStore = defineStore("node", {
     },
     deleteComment(nodeId: string): void {
       const node = this.nodes.find((node) => node.id === nodeId);
-      console.log("deleteComment", node);
+
       if (node && node.data) {
-        console.log("deleteComment if");
-        // Delete the comment field of the data object
         delete node.data.comment;
       }
     },

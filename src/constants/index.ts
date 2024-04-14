@@ -3,4 +3,5 @@ export const NodeTypes = {
   trigger: "trigger",
   businessHours: "businessHours",
   addComment: "addComment",
+  dateTimeConnector: "dateTimeConnector",
 } as const;

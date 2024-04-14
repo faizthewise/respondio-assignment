@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import type { Edge } from "@vue-flow/core";
 import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
@@ -8,6 +8,7 @@ import { RectangleGroupIcon } from "@heroicons/vue/24/outline";
 import AppButton from "@/components/base/AppButton.vue";
 import {
   AddNodeModal,
+  ConnectorNode,
   CustomNode,
   CustomEdge,
   Drawer,
@@ -18,6 +19,11 @@ import type { EdgeCustomData } from "@/ts/interface";
 
 const nodeStore = useNodeStore();
 const nodes = ref(nodeStore.getNodes);
+
+onMounted(() => {
+  nodeStore.initNodes();
+  nodes.value = nodeStore.getNodes;
+});
 
 const showAddNodeModal = ref(false);
 
@@ -68,6 +74,9 @@ const edges = ref<CustomEdge[]>([
           </template>
           <template #node-addComment="customNodeProps">
             <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #node-dateTimeConnector="customNodeProps">
+            <ConnectorNode v-bind="customNodeProps" />
           </template>
           <template #edge-custom="customEdgeProps">
             <CustomEdge v-bind="customEdgeProps" />
