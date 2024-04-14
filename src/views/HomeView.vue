@@ -32,7 +32,7 @@ const toggleAddNodeModal = () => {
 <template>
   <AddNodeModal :visible="showAddNodeModal" @close="toggleAddNodeModal" />
   <Drawer />
-  <div class="h-full w-full px-20 py-12">
+  <div class="h-full w-full px-6 md:px-12 lg:px-20 py-12">
     <div class="flex flex-col gap-4">
       <div class="flex gap-2 items-center">
         <RectangleGroupIcon class="w-10 h-10 text-primary" />

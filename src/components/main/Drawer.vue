@@ -45,7 +45,16 @@ watch(
 );
 
 const width = computed(() => {
-  return showDrawer.value ? "w-2/5" : "w-0";
+  const screenWidth: number = window.innerWidth;
+  if (showDrawer.value) {
+    if (screenWidth > 1024) {
+      return "w-2/5";
+    } else if (screenWidth >= 768) {
+      return "w-3/5";
+    } else {
+      return "w-full";
+    }
+  } else return "w-0";
 });
 
 const router = useRouter();
@@ -169,7 +178,11 @@ const { sendMessage, addComment, businessHours } = NodeTypes;
           :node-id="selectedNodeId"
           :comment="nodeDetail?.data?.comment"
         />
-        <BusinessHours v-if="nodeDetail?.type === businessHours" />
+        <BusinessHours
+          v-if="nodeDetail?.type === businessHours"
+          :node-id="selectedNodeId"
+          :times="nodeDetail?.data?.times"
+        />
       </div>
     </div>
   </div>
