@@ -1,4 +1,5 @@
 import AddComment from "./AddComment.vue";
 import SendMessage from "./SendMessage.vue";
+import BusinessHours from "./BusinessHours.vue";
 
-export { AddComment, SendMessage };
+export { AddComment, BusinessHours, SendMessage };

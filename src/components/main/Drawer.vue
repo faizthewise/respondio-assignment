@@ -4,7 +4,7 @@ import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/20/solid";
 import { useRouter, useRoute } from "vue-router";
 
 import { AppModal, AppButton, AppInput, AppTextbox } from "../base";
-import { SendMessage, AddComment } from "@/components/drawer";
+import { SendMessage, AddComment, BusinessHours } from "@/components/drawer";
 import { useNodeStore } from "@/stores/nodes";
 
 import type { CustomNode } from "@/ts/type";
@@ -90,7 +90,7 @@ const updateNode = () => {
   close();
 };
 
-const { sendMessage, addComment } = NodeTypes;
+const { sendMessage, addComment, businessHours } = NodeTypes;
 </script>
 
 <template>
@@ -169,6 +169,7 @@ const { sendMessage, addComment } = NodeTypes;
           :node-id="selectedNodeId"
           :comment="nodeDetail?.data?.comment"
         />
+        <BusinessHours v-if="nodeDetail?.type === businessHours" />
       </div>
     </div>
   </div>
