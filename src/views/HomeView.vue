@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import type { Edge } from "@vue-flow/core";
 import { VueFlow } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
@@ -8,16 +8,30 @@ import { RectangleGroupIcon } from "@heroicons/vue/24/outline";
 import AppButton from "@/components/base/AppButton.vue";
 import {
   AddNodeModal,
+  ConnectorNode,
   CustomNode,
   CustomEdge,
   Drawer,
 } from "@/components/main";
+
 import { useNodeStore } from "@/stores/nodes";
+import { useEdgeStore } from "@/stores/edges";
 
 import type { EdgeCustomData } from "@/ts/interface";
 
 const nodeStore = useNodeStore();
 const nodes = ref(nodeStore.getNodes);
+
+const edgeStore = useEdgeStore();
+const edges = ref(edgeStore.getEdges);
+
+onMounted(() => {
+  nodeStore.initNodes();
+  nodes.value = nodeStore.getNodes;
+
+  edgeStore.initEdges();
+  edges.value = edgeStore.getEdges;
+});
 
 const showAddNodeModal = ref(false);
 
@@ -28,21 +42,12 @@ const toggleAddNodeModal = () => {
 type CustomEdgeTypes = "custom" | "special";
 
 type CustomEdge = Edge<EdgeCustomData, any, CustomEdgeTypes>;
-
-const edges = ref<CustomEdge[]>([
-  {
-    id: "el1-2",
-    source: "1",
-    target: "2",
-    type: "custom",
-  },
-]);
 </script>
 
 <template>
   <AddNodeModal :visible="showAddNodeModal" @close="toggleAddNodeModal" />
   <Drawer />
-  <div class="h-full w-full px-28 py-16">
+  <div class="h-full w-full px-20 py-12">
     <div class="flex flex-col gap-4">
       <div class="flex gap-2 items-center">
         <RectangleGroupIcon class="w-10 h-10 text-primary" />
@@ -68,6 +73,9 @@ const edges = ref<CustomEdge[]>([
           </template>
           <template #node-addComment="customNodeProps">
             <CustomNode v-bind="customNodeProps" />
+          </template>
+          <template #node-dateTimeConnector="customNodeProps">
+            <ConnectorNode v-bind="customNodeProps" />
           </template>
           <template #edge-custom="customEdgeProps">
             <CustomEdge v-bind="customEdgeProps" />

@@ -1,13 +1,29 @@
+import { BusinessHours } from "@/components/drawer";
+
 export interface NodeCustomData {
-  description: string;
+  description?: string;
   title: string;
   payload?: SendMessagePayload[];
+  comment?: string;
+  type?: string;
+  timezone?: string;
+  action?: string;
+  oncePerContact?: boolean;
+  times?: BusinessHoursTimes[];
+  connectors?: string[];
+  connectorType?: string;
 }
 
 export interface SendMessagePayload {
   type: string;
-  attachment: string;
-  text: string;
+  attachment?: string;
+  text?: string;
+}
+
+export interface BusinessHoursTimes {
+  startTime: string;
+  endTime: string;
+  day: string;
 }
 
 export interface EdgeCustomData {
@@ -18,7 +34,6 @@ export interface CustomEvents {
   [key: string]: CustomEvent;
 }
 
-// Define the structure of a custom event
 export interface CustomEvent {
   onCustomEvent: (event: MouseEvent) => void;
 }

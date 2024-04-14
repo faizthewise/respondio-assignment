@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import { computed, watch, ref } from "vue";
-import { PencilIcon, TrashIcon } from "@heroicons/vue/20/solid";
+import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/20/solid";
 import { useRouter, useRoute } from "vue-router";
 
 import { AppModal, AppButton, AppInput, AppTextbox } from "../base";
-import SendMessage from "@/components/drawer/SendMessage.vue";
+import { SendMessage, AddComment, BusinessHours } from "@/components/drawer";
 import { useNodeStore } from "@/stores/nodes";
 
 import type { CustomNode } from "@/ts/type";
+import { NodeTypes } from "@/constants";
 
 const route = useRoute();
 const showDrawer = ref(false);
@@ -88,6 +89,8 @@ const updateNode = () => {
   toggleDisplayModal();
   close();
 };
+
+const { sendMessage, addComment, businessHours } = NodeTypes;
 </script>
 
 <template>
@@ -120,7 +123,13 @@ const updateNode = () => {
       'h-screen bg-surface-low z-10 fixed right-0 transition-all duration-200 ease-in ',
     ]"
   >
-    <div class="w-full h-full relative overflow-hidden flex flex-col pt-8 px-6">
+    <div
+      class="w-full h-full relative overflow-hidden flex flex-col pt-10 px-6"
+    >
+      <XMarkIcon
+        class="w-5 h-5 absolute top-2 right-2 hover:cursor-pointer hover:text-white"
+        @click="close"
+      />
       <div class="flex flex-col gap-3 mb-6 h-max">
         <div class="flex justify-between items-center">
           <h3>{{ nodeDetail?.data?.title }}</h3>
@@ -148,8 +157,19 @@ const updateNode = () => {
       </div>
 
       <div class="h-[2px] bg-white w-full"></div>
-      <div class="mt-8 h-full">
-        <SendMessage :payload="nodeDetail?.data?.payload" />
+      <div v-if="showDrawer" class="mt-8 h-full">
+        <SendMessage
+          v-if="nodeDetail?.type === sendMessage"
+          :payload="nodeDetail?.data?.payload"
+          :node-id="selectedNodeId"
+          :type="nodeDetail?.type"
+        />
+        <AddComment
+          v-if="nodeDetail?.type === addComment"
+          :node-id="selectedNodeId"
+          :comment="nodeDetail?.data?.comment"
+        />
+        <BusinessHours v-if="nodeDetail?.type === businessHours" />
       </div>
     </div>
   </div>
