@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { EdgeProps } from "@vue-flow/core";
 import { BezierEdge } from "@vue-flow/core";
 
+import type { EdgeProps } from "@vue-flow/core";
 import type { EdgeCustomData } from "@/ts/interface";
 
 defineProps<EdgeProps<EdgeCustomData>>();

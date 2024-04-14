@@ -7,9 +7,6 @@ import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 import { AppInput, AppTextbox } from "@/components/base";
 import { useNodeStore } from "@/stores/nodes";
 
-import type { PropType } from "vue";
-import type { CustomNode } from "@/ts/type";
-
 const props = defineProps({
   nodeId: {
     type: String,

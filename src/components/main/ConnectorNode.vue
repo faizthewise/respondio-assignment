@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { NodeProps } from "@vue-flow/core";
-
 import type { NodeCustomData } from "@/ts/interface";
 
 defineProps<NodeProps<NodeCustomData>>();

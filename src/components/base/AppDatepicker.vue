@@ -76,7 +76,7 @@ export default defineComponent({
     is-expanded
     :max-date="maxDate"
     :min-date="minDate"
-    mode="dateTime"
+    mode="time"
   >
     <template v-slot="{ inputValue, showPopover }">
       <label

@@ -32,14 +32,14 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run Unit Tests with [Jest]
 
 ```sh
 npm run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Run unit test coverage
 
 ```sh
-npm run lint
+npm run coverage
 ```
