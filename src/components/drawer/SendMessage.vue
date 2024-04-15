@@ -92,7 +92,7 @@ const updateImage = (base64Data: string) => {
     id="send-message-container"
     class="h-full flex flex-col w-full justify-between relative"
   >
-    <div class="max-h-[90%] flex flex-col gap-4 overflow-auto">
+    <div class="h-[90%] flex flex-col gap-4 overflow-auto">
       <template v-for="(data, index) in payload" :key="index">
         <div
           v-if="data.type === 'text'"
