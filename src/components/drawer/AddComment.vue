@@ -56,7 +56,7 @@ const addNewComment = () => {
     id="send-message-container"
     class="h-full flex flex-col w-full justify-between relative"
   >
-    <div class="h-full flex flex-col gap-4 overflow-scroll">
+    <div class="h-full flex flex-col gap-4 overflow-auto">
       <div class="flex gap-2 items-center relative">
         <template v-if="existingComment">
           <form @submit.prevent="() => handleUpdate(false)" class="w-full">
