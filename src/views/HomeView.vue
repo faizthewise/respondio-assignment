@@ -9,7 +9,6 @@ import {
   AddNodeModal,
   ConnectorNode,
   CustomNode,
-  CustomEdge,
   Drawer,
 } from "@/components/main";
 
@@ -61,9 +60,6 @@ const toggleAddNodeModal = () => {
           </template>
           <template #node-dateTimeConnector="customNodeProps">
             <ConnectorNode v-bind="customNodeProps" />
-          </template>
-          <template #edge-custom="customEdgeProps">
-            <CustomEdge v-bind="customEdgeProps" />
           </template>
         </VueFlow>
       </div>

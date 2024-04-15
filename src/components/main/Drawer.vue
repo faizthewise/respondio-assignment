@@ -182,6 +182,7 @@ const { sendMessage, addComment, businessHours } = NodeTypes;
           v-if="nodeDetail?.type === businessHours"
           :node-id="selectedNodeId"
           :times="nodeDetail?.data?.times"
+          :timezone="nodeDetail?.data?.timezone"
         />
       </div>
     </div>

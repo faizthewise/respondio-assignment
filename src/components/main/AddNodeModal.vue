@@ -6,6 +6,7 @@ import { useNodeStore } from "@/stores/nodes";
 
 import { NodeTypes } from "@/constants";
 import type { CustomNode } from "@/ts/type";
+import type { NodeCustomData } from "@/ts/interface";
 
 defineProps({
   visible: {
@@ -27,15 +28,59 @@ const selectedNode = ref("");
 
 const nodeStore = useNodeStore();
 
+const defaultTimes = [
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "mon",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "tue",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "wed",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "thu",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "fri",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "sat",
+  },
+  {
+    startTime: "09:00",
+    endTime: "17:00",
+    day: "sun",
+  },
+];
+
 const handleAddNode = () => {
+  let data: NodeCustomData = {
+    title: title.value,
+    description: description.value,
+  };
+
+  if (selectedNode.value === businessHours) {
+    data.times = defaultTimes;
+    data.timezone = "UTC";
+  }
   let node = {
     id: Math.random().toString(),
     type: selectedNode.value,
     position: { x: Math.random() * 500, y: Math.random() * 500 },
-    data: {
-      title: title.value,
-      description: description.value,
-    },
+    data,
   };
 
   nodeStore.addNode(node as CustomNode);

@@ -1,5 +1,3 @@
-import { BusinessHours } from "@/components/drawer";
-
 export interface NodeCustomData {
   description?: string;
   title: string;

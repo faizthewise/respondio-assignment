@@ -5,6 +5,7 @@ import nodesData from "@/data/nodes.json";
 
 import type { CustomNode } from "@/ts/type";
 import type { SendMessagePayload } from "@/ts/interface";
+import type { BusinessHoursTimes } from "./../ts/interface";
 
 export const useNodeStore = defineStore("node", {
   state: () => ({
@@ -50,9 +51,7 @@ export const useNodeStore = defineStore("node", {
     deletePayloadFromNode(payloadIndex: number, nodeId: string): void {
       const node = this.getNodeById(nodeId);
       if (node?.data?.payload && node.data.payload.length > payloadIndex) {
-        // Modify the payload array by removing the payload at the specified index
         node?.data?.payload?.splice(payloadIndex, 1);
-        // Update the node in the store
         this.updateNode(node);
       }
     },
@@ -92,6 +91,22 @@ export const useNodeStore = defineStore("node", {
 
       if (node && node.data) {
         delete node.data.comment;
+      }
+    },
+    updateTime(
+      nodeId: string,
+      newTimezone: string,
+      newTimes: BusinessHoursTimes[]
+    ): void {
+      const nodeIndex = this.nodes.findIndex((node) => node.id === nodeId);
+
+      if (nodeIndex !== -1) {
+        const updatedNode = { ...this.nodes[nodeIndex] };
+
+        updatedNode.data.timezone = newTimezone;
+        updatedNode.data.times = newTimes;
+
+        this.nodes.splice(nodeIndex, 1, updatedNode);
       }
     },
   },
