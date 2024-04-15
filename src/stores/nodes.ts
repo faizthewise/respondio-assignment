@@ -103,8 +103,10 @@ export const useNodeStore = defineStore("node", {
       if (nodeIndex !== -1) {
         const updatedNode = { ...this.nodes[nodeIndex] };
 
-        updatedNode.data.timezone = newTimezone;
-        updatedNode.data.times = newTimes;
+        if (updatedNode.data) {
+          updatedNode.data.timezone = newTimezone;
+          updatedNode.data.times = newTimes;
+        }
 
         this.nodes.splice(nodeIndex, 1, updatedNode);
       }

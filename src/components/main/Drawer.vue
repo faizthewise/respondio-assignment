@@ -9,6 +9,7 @@ import { useNodeStore } from "@/stores/nodes";
 
 import type { CustomNode } from "@/ts/type";
 import { NodeTypes } from "@/constants";
+import type { BusinessHoursTimes } from "@/ts/interface";
 
 const route = useRoute();
 const showDrawer = ref(false);
@@ -181,7 +182,7 @@ const { sendMessage, addComment, businessHours } = NodeTypes;
         <BusinessHours
           v-if="nodeDetail?.type === businessHours"
           :node-id="selectedNodeId"
-          :times="nodeDetail?.data?.times"
+          :times="nodeDetail?.data?.times as BusinessHoursTimes[]"
           :timezone="nodeDetail?.data?.timezone"
         />
       </div>
