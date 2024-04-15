@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { NodeProps } from "@vue-flow/core";
 import { useRouter } from "vue-router";
 
 import {
@@ -11,6 +10,7 @@ import {
 } from "@heroicons/vue/24/outline";
 
 import type { NodeCustomData } from "@/ts/interface";
+import type { NodeProps } from "@vue-flow/core";
 import { NodeTypes } from "@/constants";
 
 const props = defineProps<NodeProps<NodeCustomData>>();

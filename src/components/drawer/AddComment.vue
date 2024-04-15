@@ -4,11 +4,8 @@ import { ref } from "vue";
 import { EllipsisVerticalIcon } from "@heroicons/vue/16/solid";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 
-import { AppInput, AppTextbox } from "@/components/base";
+import { AppInput } from "@/components/base";
 import { useNodeStore } from "@/stores/nodes";
-
-import type { PropType } from "vue";
-import type { CustomNode } from "@/ts/type";
 
 const props = defineProps({
   nodeId: {
@@ -39,7 +36,7 @@ const toggleEnableField = () => {
 
 const handleUpdate = (deleteOperation: boolean) => {
   if (deleteOperation) existingComment.value = "";
-  console.log("handleUpdate", existingComment.value);
+
   nodeStore.updateComment(props.nodeId, existingComment.value);
   fieldEnabled.value = false;
   displayActions.value = false;
